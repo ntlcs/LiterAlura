@@ -1,0 +1,64 @@
+package br.com.ncs.literalura.principal;
+
+import br.com.ncs.literalura.service.LivroService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import java.util.Scanner;
+
+@Component
+public class Principal {
+
+    private final Scanner scanner = new Scanner(System.in);
+
+    @Autowired
+    private final LivroService livroService = new LivroService();
+
+    public void showMenu() {
+        int option = -1;
+
+        do {
+            var menu = """
+                    ***Opções para escolha***
+                    1 - Buscar livros pelo título.
+                    2 - Lista de Livros registrados.
+                    3 - Lista de autores registrados.
+                    4 - Lista de autores registrados vivos em determinado ano.
+                    5 - Lista de livros por idioma.
+
+                    0 - Sair.
+                    """;
+
+            System.out.println(menu);
+            System.out.print("Escolha uma opção: ");
+
+            if (scanner.hasNextInt()) {
+                option = scanner.nextInt();
+                switch (option) {
+                    case 1 -> {
+                        System.out.println("Você escolheu buscar livros pelo título.");
+                        livroService.getBookByTitle();
+                    }
+                    case 2 ->
+                        // Implementar a lista de livros registrados
+                            System.out.println("Você escolheu ver a lista de livros registrados.");
+                    case 3 ->
+                        // Implementar a lista de autores registrados
+                            System.out.println("Você escolheu ver a lista de autores registrados.");
+                    case 4 ->
+                        // Implementar a lista de autores registrados vivos em determinado ano
+                            System.out.println("Você escolheu ver a lista de autores registrados vivos em determinado ano.");
+                    case 5 ->
+                        // Implementar a lista de livros por idioma
+                            System.out.println("Você escolheu ver a lista de livros por idioma.");
+                    case 0 -> System.out.println("Saindo...");
+                    default -> System.out.println("Opção inválida. Escolha uma opção válida.");
+                }
+            } else {
+                System.out.println("Entrada inválida. Por favor, insira um número.");
+                scanner.next(); // Consumir a entrada inválida
+            }
+        } while (option != 0);
+        scanner.close();
+    }
+}

@@ -1,4 +1,4 @@
-package br.com.ncs.LiterAlura;
+package br.com.ncs.literalura;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
