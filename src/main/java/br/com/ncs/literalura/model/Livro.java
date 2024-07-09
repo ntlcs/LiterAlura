@@ -10,15 +10,20 @@ import java.util.List;
 public class Livro {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "livro_seq")
+    @SequenceGenerator(name = "livro_seq", sequenceName = "livro_id_seq", allocationSize = 1)
     private Long id;
 
     private Long idLivro;
 
     @Column(unique = true)
     private String titulo;
+
     @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "livro_idiomas", joinColumns = @JoinColumn(name = "livro_id"))
+    @Column(name = "idioma")
     private List<String> idiomas;
+
     private Long numeroDownloads;
 
     @ManyToOne(cascade = CascadeType.ALL)
@@ -40,9 +45,6 @@ public class Livro {
         this.idiomas = Collections.singletonList(idiomaN(dadosLivros.idiomas()));
         this.numeroDownloads = dadosLivros.numeroDownloads();
 
-    }
-
-    public Livro(Livro livro) {
     }
 
     private String idiomaN(List<String> idiomas) {

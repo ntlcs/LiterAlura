@@ -1,13 +1,13 @@
 package br.com.ncs.literalura.model;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ApiResult {
-    @JsonAlias("results")
+    @JsonProperty("results")
     List<DadosLivros> resultadoLivro;
 
     public List<DadosLivros> getResultadoLivro() {

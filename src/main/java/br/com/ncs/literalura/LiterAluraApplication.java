@@ -1,20 +1,26 @@
 package br.com.ncs.literalura;
 
 import br.com.ncs.literalura.principal.Principal;
-import org.springframework.boot.CommandLineRunner;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-public class LiterAluraApplication implements CommandLineRunner {
+@ComponentScan(basePackages = {"br.com.ncs.literalura"})
+public class LiterAluraApplication {
+
+    @Autowired
+    private Principal principal;
 
     public static void main(String[] args) {
-        SpringApplication.run(LiterAluraApplication.class, args);
+        ApplicationContext context = SpringApplication.run(LiterAluraApplication.class, args);
+        LiterAluraApplication app = context.getBean(LiterAluraApplication.class);
+        app.run();
     }
 
-    @Override
-    public void run(String... args) throws Exception {
-        Principal principal = new Principal();
+    public void run() {
         principal.showMenu();
     }
 

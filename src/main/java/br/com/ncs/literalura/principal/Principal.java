@@ -12,14 +12,15 @@ public class Principal {
     private final Scanner scanner = new Scanner(System.in);
 
     @Autowired
-    private final LivroService livroService = new LivroService();
+    private LivroService livroService;
 
     public void showMenu() {
         int option = -1;
 
         do {
             var menu = """
-                    ***Opções para escolha***
+                    ---- OPÇÕES PARA ESCOLHA ----
+                    
                     1 - Buscar livros pelo título.
                     2 - Lista de Livros registrados.
                     3 - Lista de autores registrados.
@@ -39,9 +40,10 @@ public class Principal {
                         System.out.println("Você escolheu buscar livros pelo título.");
                         livroService.getBookByTitle();
                     }
-                    case 2 ->
-                        // Implementar a lista de livros registrados
-                            System.out.println("Você escolheu ver a lista de livros registrados.");
+                    case 2 ->{
+                        System.out.println("Você escolheu ver a lista de livros registrados.");
+                        livroService.findAll();
+                    }
                     case 3 ->
                         // Implementar a lista de autores registrados
                             System.out.println("Você escolheu ver a lista de autores registrados.");
@@ -56,7 +58,7 @@ public class Principal {
                 }
             } else {
                 System.out.println("Entrada inválida. Por favor, insira um número.");
-                scanner.next(); // Consumir a entrada inválida
+                scanner.next();
             }
         } while (option != 0);
         scanner.close();

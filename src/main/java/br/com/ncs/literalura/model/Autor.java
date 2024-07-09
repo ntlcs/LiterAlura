@@ -9,12 +9,16 @@ import java.util.List;
 @Table(name = "autor")
 public class Autor {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy =  GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "autor_seq")
+    @SequenceGenerator(name = "autor_seq", sequenceName = "autor_id_seq", allocationSize = 1)
     private Long id;
 
     @Column(unique = true)
     private String nome;
+
     private Integer anoNascimento;
+
     private Integer anoFalecimento;
 
 
