@@ -5,6 +5,7 @@ import br.com.ncs.literalura.model.Autor;
 import br.com.ncs.literalura.model.Livro;
 import br.com.ncs.literalura.repository.AuthorRepository;
 import br.com.ncs.literalura.repository.BookRepository;
+import br.com.ncs.literalura.utils.IdiomaSiglaConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +21,8 @@ public class LivroService {
 
     private final Scanner scanner = new Scanner(System.in);
 
+    private final IdiomaSiglaConverter idiomaSiglaConverter = new IdiomaSiglaConverter();
+
     @Autowired
     private WebClient webClient;
 
@@ -29,22 +32,7 @@ public class LivroService {
     @Autowired
     private AuthorRepository authorRepository;
 
-    @Transactional(readOnly = true)
-    public void findAll(){
-            List<Object[]> books = bookRepository.findAllBooks();
-
-            System.out.println("aqui eu mostro o tamanho do retorno do repository: " + books.size());
-
-            for (Object[] book : books) {
-                System.out.println("ID: " + book[0]);
-                System.out.println("ID Livro: " + book[1]);
-                System.out.println("Título: " + book[2]);
-                System.out.println("Número de Downloads: " + book[3]);
-                System.out.println("ID do Autor: " + book[4]);
-                System.out.println("-----------------------------");
-
-            }
-
+    public LivroService() {
     }
 
     @Transactional
@@ -85,4 +73,56 @@ public class LivroService {
             System.out.println("Livro não encontrado!" + "\n");
         }
     }
+
+    @Transactional(readOnly = true)
+    public void findAllBooks(){
+        List<Livro> livros = bookRepository.findAllBooks();
+
+        livros.forEach(System.out::println);
+    }
+
+    @Transactional(readOnly = true)
+    public void findAllAuthors(){
+        List<Autor> autores = authorRepository.findAll();
+
+        autores.forEach(System.out::println);
+
+    }
+
+    @Transactional(readOnly = true)
+    public void livingAuthors(){
+
+        System.out.println("Digite o ano que deseja buscar: ");
+
+        Integer ano = scanner.nextInt();
+        List<Autor> autores = authorRepository.findAutoresVivos(ano);
+
+        autores.forEach(System.out::println);
+    }
+
+    @Transactional(readOnly = true)
+    public void booksByLanguage() {
+        String idioma;
+
+        do {
+            System.out.println("Digite o idioma dos livros que deseja buscar: ");
+            idioma = scanner.nextLine().toLowerCase();
+
+            if (idioma.isEmpty()) {
+                System.out.println("O idioma não pode ser vazio. Por favor, insira um idioma válido.");
+            } else {
+                idioma = IdiomaSiglaConverter.getSigla(idioma);
+            }
+        } while (idioma.isEmpty());
+
+        List<Livro> livros = bookRepository.findByIdioma(idioma);
+
+        if(livros.isEmpty()) {
+            System.out.println("Livros não encontrados!");
+        } else {
+            livros.forEach(System.out::println);
+        }
+
+    }
+
 }

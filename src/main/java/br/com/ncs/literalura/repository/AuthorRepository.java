@@ -13,8 +13,6 @@ import java.util.Optional;
 public interface AuthorRepository extends JpaRepository<Autor, Long> {
     List<Autor> findAll();
     
-    Optional<Autor> findById(Long aLong);
-
     Optional<Autor> findByNome(String nome);
 
     @Query("SELECT a FROM Autor a WHERE a.anoNascimento <= :ano AND (a.anoFalecimento IS NULL OR a.anoFalecimento >= :ano)")

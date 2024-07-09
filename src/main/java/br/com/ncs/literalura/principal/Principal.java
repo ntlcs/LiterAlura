@@ -42,17 +42,20 @@ public class Principal {
                     }
                     case 2 ->{
                         System.out.println("Você escolheu ver a lista de livros registrados.");
-                        livroService.findAll();
+                        livroService.findAllBooks();
                     }
-                    case 3 ->
-                        // Implementar a lista de autores registrados
-                            System.out.println("Você escolheu ver a lista de autores registrados.");
-                    case 4 ->
-                        // Implementar a lista de autores registrados vivos em determinado ano
-                            System.out.println("Você escolheu ver a lista de autores registrados vivos em determinado ano.");
-                    case 5 ->
-                        // Implementar a lista de livros por idioma
-                            System.out.println("Você escolheu ver a lista de livros por idioma.");
+                    case 3 -> {
+                        System.out.println("Você escolheu ver a lista de autores registrados.");
+                        livroService.findAllAuthors();
+                    }
+                    case 4 -> {
+                        System.out.println("Você escolheu ver a lista de autores registrados vivos em determinado ano.");
+                        livroService.livingAuthors();
+                    }
+                    case 5 -> {
+                        System.out.println("Você escolheu ver a lista de livros por idioma.");
+                        livroService.booksByLanguage();
+                    }
                     case 0 -> System.out.println("Saindo...");
                     default -> System.out.println("Opção inválida. Escolha uma opção válida.");
                 }
